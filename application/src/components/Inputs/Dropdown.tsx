@@ -29,17 +29,15 @@ export const Dropdown = ({
   if (!options) throw new Error("Options is missing");
 
   const PLACEHOLDER_VALUE = "rfb-placeholder";
-  const onChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    onChangeProps(e.target.value);
-  };
+  const onChange = () => onChangeProps(value);
 
   return (
     <select
       {...{
-        placeholder,
         defaultValue: PLACEHOLDER_VALUE,
-        value,
         onChange,
+        placeholder,
+        value,
         ...props
       }}
     >

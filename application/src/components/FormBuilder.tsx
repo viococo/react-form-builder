@@ -23,8 +23,9 @@ interface IFormBuilder {
 /**
  * DATA
  */
-const inputsDefault: Iinputs = {
-  dropdown: Dropdown
+const inpusComponentsDefault: Iinputs = {
+  dropdown: Dropdown,
+  select: Dropdown
 };
 
 /**
@@ -32,15 +33,17 @@ const inputsDefault: Iinputs = {
  */
 export const FormBuilder = ({
   inputs,
-  inputComponents,
+  inputComponents = {},
   values = {},
-  onChange
+  onChange,
+  ...props
 }: IFormBuilder) => {
+  const allInputComponents = { ...inpusComponentsDefault, ...inputComponents };
+
   return (
-    <form>
+    <form {...props}>
       {Object.entries(inputs).map(([key, { type, ...props }]) => {
-        const Component =
-          (inputComponents && inputComponents[type]) || inputsDefault[type];
+        const Component = allInputComponents[type];
         if (!Component)
           throw Error(`${type} type doesn't have Component associate`);
 
@@ -50,8 +53,9 @@ export const FormBuilder = ({
           <div {...{ key }}>
             <Component
               {...{
-                value,
+                name: key,
                 onChange: (value: string) => onChange({ key, value }),
+                value,
                 ...props
               }}
             />

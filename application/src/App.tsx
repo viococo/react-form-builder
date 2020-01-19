@@ -21,17 +21,26 @@ const App: React.FC = () => {
       {...{
         inputs: {
           // text: { type: "text" },
-          select: {
-            type: "dropdown",
-            placeholder: "select placehoder",
-            options: {
-              a: { text: "a" },
-              b: { text: "b" },
-              c: { text: "c" }
-            }
-          }
           // number: { type: "number" },
           // textarea: { type: "textarea" }
+          dropdown: {
+            type: "dropdown",
+            placeholder: "dropdown placehoder",
+            options: {
+              a: { text: "dropdown a" },
+              b: { text: "dropdown b" },
+              c: { text: "dropdown c" }
+            }
+          },
+          select: {
+            type: "select",
+            placeholder: "select placehoder",
+            options: {
+              a: { text: "select a" },
+              b: { text: "select b" },
+              c: { text: "select c" }
+            }
+          }
         },
         onChange,
         values: state
