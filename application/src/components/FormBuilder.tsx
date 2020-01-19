@@ -1,28 +1,29 @@
-import React from "react";
+import React, { ComponentType } from "react";
 import { Dropdown, IOptions } from "./Inputs/Dropdown";
 
 /**
  * TYPES
  */
-interface FormBuilderInputProps {
+interface IFormBuilderInput {
   type: string;
-  options: IOptions;
+  options?: IOptions;
   placeholder?: string;
 }
-interface inputsDefaultType {
-  [key: string]: string | typeof Dropdown;
+interface Iinputs {
+  // TODO: find a way to remove that "any"
+  [key: string]: ComponentType<any>;
 }
-interface FormBuilderType {
-  inputs: { [key: string]: FormBuilderInputProps };
-  inputComponents?: inputsDefaultType;
+interface IFormBuilder {
+  inputs: { [key: string]: IFormBuilderInput };
   values: { [name: string]: string };
   onChange: Function;
+  inputComponents?: Iinputs;
 }
 
 /**
  * DATA
  */
-const inputsDefault: inputsDefaultType = {
+const inputsDefault: Iinputs = {
   dropdown: Dropdown
 };
 
@@ -34,7 +35,7 @@ export const FormBuilder = ({
   inputComponents,
   values = {},
   onChange
-}: FormBuilderType) => {
+}: IFormBuilder) => {
   return (
     <form>
       {Object.entries(inputs).map(([key, { type, ...props }]) => {

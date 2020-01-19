@@ -3,17 +3,17 @@ import React from "react";
 /**
  * TYPES
  */
-export interface IDropdown {
-  onChange: Function;
-  options: IOptions;
-  value: string;
-  placeholder?: string;
-}
 interface IOption {
   text: string;
 }
 export interface IOptions {
   [value: string]: IOption;
+}
+export interface IDropdown {
+  onChange: Function;
+  value: string;
+  options?: IOptions;
+  placeholder?: string;
 }
 
 /**
@@ -26,9 +26,12 @@ export const Dropdown = ({
   value,
   ...props
 }: IDropdown) => {
-  const onChange = (e: React.ChangeEvent<HTMLSelectElement>) =>
+  if (!options) throw new Error("Options is missing");
+
+  const PLACEHOLDER_VALUE = "rfb-placeholder";
+  const onChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     onChangeProps(e.target.value);
-  const PLACEHOLDER_VALUE = "rfbPlaceholder";
+  };
 
   return (
     <select
