@@ -1,7 +1,9 @@
 import React, { ComponentType } from "react";
 
 // Import default inputs
+import { FieldCheckbox } from "./Inputs/FieldCheckbox";
 import { FieldDropdown, IOptions } from "./Inputs/FieldDropdown";
+import { FieldRadio } from "./Inputs/FieldRadio";
 import { FieldText } from "./Inputs/FieldText";
 import { FieldTextarea } from "./Inputs/FieldTextarea";
 
@@ -30,9 +32,11 @@ interface IFormBuilder {
  * DATA
  */
 const inputsComponentsDefault: Iinputs = {
+  checkbox: FieldCheckbox,
   dropdown: FieldDropdown,
   number: FieldText,
   password: FieldText,
+  radio: FieldRadio,
   select: FieldDropdown,
   text: FieldText,
   textarea: FieldTextarea

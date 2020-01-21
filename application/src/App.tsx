@@ -30,6 +30,23 @@ const App: React.FC = () => {
     <FormBuilder
       {...{
         inputs: {
+          checkbox: {
+            type: "checkbox",
+            options: {
+              a: { text: "checkbox a" },
+              b: { text: "checkbox b" },
+              c: { text: "checkbox c" }
+            }
+          },
+          radio: {
+            type: "radio",
+            options: {
+              a: { text: "radio a" },
+              b: { text: "radio b" },
+              c: { text: "radio c" }
+            }
+          },
+
           dropdown: {
             type: "dropdown",
             placeholder: "dropdown placehoder",
