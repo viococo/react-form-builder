@@ -3,6 +3,7 @@ import React, { ComponentType } from "react";
 // Import default inputs
 import { FieldDropdown, IOptions } from "./Inputs/FieldDropdown";
 import { FieldText } from "./Inputs/FieldText";
+import { FieldTextarea } from "./Inputs/FieldTextarea";
 
 /**
  * TYPES
@@ -33,7 +34,8 @@ const inputsComponentsDefault: Iinputs = {
   number: FieldText,
   password: FieldText,
   select: FieldDropdown,
-  text: FieldText
+  text: FieldText,
+  textarea: FieldTextarea
 };
 
 /**
@@ -56,7 +58,7 @@ export const FormBuilder = ({
         const { type, ...props } = input;
         const Component = allInputComponents[type];
         if (!Component)
-          throw Error(`${type} type doesn't have Component associate`);
+          throw ReferenceError(`${type} type doesn't have Component associate`);
 
         const { [key]: value } = values;
         const { [key]: error } = errors;

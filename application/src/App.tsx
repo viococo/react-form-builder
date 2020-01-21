@@ -30,8 +30,6 @@ const App: React.FC = () => {
     <FormBuilder
       {...{
         inputs: {
-          number: { type: "number" },
-          // textarea: { type: "textarea" }
           dropdown: {
             type: "dropdown",
             placeholder: "dropdown placehoder",
@@ -51,8 +49,10 @@ const App: React.FC = () => {
             }
           },
 
+          number: { type: "number" },
           plop: { type: "password" },
-          text: { type: "text" }
+          text: { type: "text" },
+          textarea: { type: "textarea", placeholder: "toto" }
         },
 
         onError,
