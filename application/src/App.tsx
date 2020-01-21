@@ -3,25 +3,34 @@ import { FormBuilder } from "./components/FormBuilder";
 
 interface onChangeType {
   key: string;
-  value: any;
+  value: string;
 }
 
 const App: React.FC = () => {
-  const [state, setState] = useState();
-  const onChange = ({ key, value }: onChangeType) => {
+  const [state, setState] = useState({});
+  const onChange = (
+    e: React.ChangeEvent<any>,
+    { key, value }: onChangeType
+  ) => {
     setState({ ...state, [key]: value });
   };
-
   useEffect(() => {
     console.log("STATE", state);
-  });
+  }, [state]);
+
+  const [errors, setErrors] = useState({});
+  const onError = ({ key, value }: onChangeType) => {
+    setErrors({ ...errors, [key]: value });
+  };
+  useEffect(() => {
+    console.log("ERRORS", errors);
+  }, [errors]);
 
   return (
     <FormBuilder
       {...{
         inputs: {
-          // text: { type: "text" },
-          // number: { type: "number" },
+          number: { type: "number" },
           // textarea: { type: "textarea" }
           dropdown: {
             type: "dropdown",
@@ -40,9 +49,16 @@ const App: React.FC = () => {
               b: { text: "select b" },
               c: { text: "select c" }
             }
-          }
+          },
+
+          plop: { type: "password" },
+          text: { type: "text" }
         },
+
+        onError,
         onChange,
+
+        errors,
         values: state
       }}
     />

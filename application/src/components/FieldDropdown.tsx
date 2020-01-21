@@ -19,7 +19,7 @@ export interface IDropdown {
 /**
  * COMPONENT
  */
-export const Dropdown = ({
+export const FieldDropdown = ({
   onChange: onChangeProps,
   options,
   placeholder,
@@ -29,7 +29,8 @@ export const Dropdown = ({
   if (!options) throw new Error("Options is missing");
 
   const PLACEHOLDER_VALUE = "rfb-placeholder";
-  const onChange = () => onChangeProps(value);
+  const onChange = (e: React.ChangeEvent<any>) =>
+    onChangeProps(e, { value: e.target.value });
 
   return (
     <select

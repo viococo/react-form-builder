@@ -1,5 +1,8 @@
 import React, { ComponentType } from "react";
-import { Dropdown, IOptions } from "./Inputs/Dropdown";
+
+// Import default inputs
+import { FieldDropdown, IOptions } from "./Inputs/FieldDropdown";
+import { FieldText } from "./Inputs/FieldText";
 
 /**
  * TYPES
@@ -9,53 +12,66 @@ interface IFormBuilderInput {
   options?: IOptions;
   placeholder?: string;
 }
+// TODO: find a way to remove that "any"
 interface Iinputs {
-  // TODO: find a way to remove that "any"
   [key: string]: ComponentType<any>;
 }
 interface IFormBuilder {
   inputs: { [key: string]: IFormBuilderInput };
   values: { [name: string]: string };
   onChange: Function;
-  inputComponents?: Iinputs;
+  components?: Iinputs;
+  errors?: { [name: string]: string };
+  onError?: Function;
 }
 
 /**
  * DATA
  */
-const inpusComponentsDefault: Iinputs = {
-  dropdown: Dropdown,
-  select: Dropdown
+const inputsComponentsDefault: Iinputs = {
+  dropdown: FieldDropdown,
+  number: FieldText,
+  password: FieldText,
+  select: FieldDropdown,
+  text: FieldText
 };
 
 /**
  * COMPONENT
  */
 export const FormBuilder = ({
+  errors = {},
   inputs,
-  inputComponents = {},
+  components = {},
   values = {},
   onChange,
+  onError,
   ...props
 }: IFormBuilder) => {
-  const allInputComponents = { ...inpusComponentsDefault, ...inputComponents };
+  const allInputComponents = { ...inputsComponentsDefault, ...components };
 
   return (
     <form {...props}>
-      {Object.entries(inputs).map(([key, { type, ...props }]) => {
+      {Object.entries(inputs).map(([key, input]) => {
+        const { type, ...props } = input;
         const Component = allInputComponents[type];
         if (!Component)
           throw Error(`${type} type doesn't have Component associate`);
 
-        const value = values[key];
+        const { [key]: value } = values;
+        const { [key]: error } = errors;
 
         return (
           <div {...{ key }}>
             <Component
               {...{
-                name: key,
-                onChange: (value: string) => onChange({ key, value }),
+                error,
+                type,
                 value,
+                name: key,
+                onChange: (e: React.ChangeEvent<any>, { value }: any) =>
+                  onChange(e, { key, value, input }),
+                onError: (value: string) => onError && onError({ key, value }),
                 ...props
               }}
             />
