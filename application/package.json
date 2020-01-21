@@ -1,7 +1,12 @@
 {
-  "name": "application",
+  "name": "react-form-builder",
   "version": "0.1.0",
   "private": true,
+  "author": {
+    "name": "viococo",
+    "url": "https://viococo.com"
+  },
+  "description": "A package to help creating forms",
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.4.0",
