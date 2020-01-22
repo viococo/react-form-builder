@@ -1,11 +1,12 @@
-import React, { ComponentType } from "react";
+import React, { ComponentType, ComponentProps } from "react";
+import { Form } from "reactstrap";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 // Import default inputs
 import { FieldCheckbox } from "./Inputs/FieldCheckbox";
 import { FieldDropdown, IOptions } from "./Inputs/FieldDropdown";
 import { FieldRadio } from "./Inputs/FieldRadio";
 import { FieldText } from "./Inputs/FieldText";
-import { FieldTextarea } from "./Inputs/FieldTextarea";
 
 /**
  * TYPES
@@ -19,7 +20,7 @@ interface IFormBuilderInput {
 interface Iinputs {
   [key: string]: ComponentType<any>;
 }
-interface IFormBuilder {
+interface IFormBuilder extends Omit<ComponentProps<typeof Form>, "onChange"> {
   inputs: { [key: string]: IFormBuilderInput };
   values: { [name: string]: string };
   onChange: Function;
@@ -39,7 +40,7 @@ const inputsComponentsDefault: Iinputs = {
   radio: FieldRadio,
   select: FieldDropdown,
   text: FieldText,
-  textarea: FieldTextarea
+  textarea: FieldText
 };
 
 /**
@@ -57,7 +58,7 @@ export const FormBuilder = ({
   const allInputComponents = { ...inputsComponentsDefault, ...components };
 
   return (
-    <form {...props}>
+    <Form {...props}>
       {Object.entries(inputs).map(([key, input]) => {
         const { type, ...props } = input;
         const Component = allInputComponents[type];
@@ -84,6 +85,6 @@ export const FormBuilder = ({
           </div>
         );
       })}
-    </form>
+    </Form>
   );
 };

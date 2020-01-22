@@ -1,22 +1,25 @@
-import React from "react";
+import React, { ComponentProps } from "react";
+import { FormGroup, Label, Input } from "reactstrap";
+
 import { IOptions } from "./FieldDropdown";
 
 /**
  * TYPES
  **/
-interface IFieldRadio {
+interface IFieldRadio extends Omit<ComponentProps<typeof Input>, "onChange"> {
   value: string;
-  options?: IOptions;
   onChange: Function;
+  options?: IOptions;
 }
 
 /**
  * COMPONENT
  **/
 export const FieldRadio = ({
-  value: currentValue,
-  options,
+  className,
   onChange: onChangeProps,
+  options,
+  value: currentValue,
   ...props
 }: IFieldRadio) => {
   if (!options) throw new Error("Options is missing");
@@ -25,12 +28,12 @@ export const FieldRadio = ({
     onChangeProps(e, { value: e.target.value });
 
   return (
-    <div>
+    <div {...{ className }}>
       {Object.entries(options).map(([value, { text }]) => {
         return (
-          <div {...{ key: value }}>
-            <label>
-              <input
+          <FormGroup check {...{ key: value }}>
+            <Label check>
+              <Input
                 {...{
                   value,
                   onChange,
@@ -39,8 +42,8 @@ export const FieldRadio = ({
                 }}
               />
               {text}
-            </label>
-          </div>
+            </Label>
+          </FormGroup>
         );
       })}
     </div>

@@ -1,12 +1,14 @@
-import React from "react";
+import React, { ComponentProps } from "react";
+import { FormGroup, Label, Input } from "reactstrap";
+
 import { IOptions } from "./FieldDropdown";
 
 /**
  * TYPES
  **/
-type Ivalues = Array<string>;
-interface IFieldCheckbox {
-  value: Ivalues;
+interface IFieldCheckbox
+  extends Omit<ComponentProps<typeof Input>, "onChange"> {
+  value: Array<string>;
   options?: IOptions;
   onChange: Function;
 }
@@ -15,6 +17,7 @@ interface IFieldCheckbox {
  * COMPONENT
  **/
 export const FieldCheckbox = ({
+  className,
   value: currentValues = [],
   options,
   onChange: onChangeProps,
@@ -33,12 +36,12 @@ export const FieldCheckbox = ({
   };
 
   return (
-    <div>
+    <div {...{ className }}>
       {Object.entries(options).map(([value, { text }]) => {
         return (
-          <div {...{ key: value }}>
-            <label>
-              <input
+          <FormGroup {...{ key: value }}>
+            <Label check>
+              <Input
                 {...{
                   value,
                   onChange,
@@ -47,8 +50,8 @@ export const FieldCheckbox = ({
                 }}
               />
               {text}
-            </label>
-          </div>
+            </Label>
+          </FormGroup>
         );
       })}
     </div>

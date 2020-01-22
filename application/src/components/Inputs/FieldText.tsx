@@ -1,10 +1,10 @@
-import React from "react";
+import React, { ComponentProps } from "react";
+import { Input } from "reactstrap";
 
 /**
  * TYPES
  **/
-interface IFieldText {
-  value: string;
+interface IFieldText extends Omit<ComponentProps<typeof Input>, "onChange"> {
   onChange: Function;
 }
 
@@ -19,5 +19,5 @@ export const FieldText = ({
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) =>
     onChangeProps(e, { value: e.target.value });
 
-  return <input {...{ onChange, value, ...props }} />;
+  return <Input {...{ onChange, value, ...props }} />;
 };
