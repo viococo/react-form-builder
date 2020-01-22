@@ -39,7 +39,7 @@ export const FieldCheckbox = ({
     <div {...{ className }}>
       {Object.entries(options).map(([value, { text }]) => {
         return (
-          <FormGroup {...{ key: value }}>
+          <FormGroup check {...{ key: value }}>
             <Label check>
               <Input
                 {...{
